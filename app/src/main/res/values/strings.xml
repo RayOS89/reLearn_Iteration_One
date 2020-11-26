@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">reLearn_Iteration_One</string>
+    <string name="name">Name</string>
+    <string name="email">Email</string>
+    <string name="number">Number</string>
+    <string name="delete">Delete</string>
+    <string name="update">Update</string>
+    <string name="save">Save</string>
+    <string name="retrieve">Retrieve</string>
+</resources>
