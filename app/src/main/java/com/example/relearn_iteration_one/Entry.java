@@ -1,15 +1,26 @@
 package com.example.relearn_iteration_one;
 
-import android.widget.EditText;
+import com.google.firebase.firestore.Exclude;
 
 public class Entry {
+    private String ID;
     private String name;
     private String email;
     private String number;
+    private int priority;
 
     public Entry(){
         // Public no arg constructor for FireStore
     }
+    @Exclude // prevents document Id from being requested as it is redundant data.
+    public String getID() {
+        return ID;
+    }
+
+    public void setID(String ID) {
+        this.ID = ID;
+    }
+
     public String getName() {
         return name;
     }
@@ -34,10 +45,19 @@ public class Entry {
         this.number = number;
     }
 
-    public Entry(String name, String email, String number) {
+    public int getPriority() {
+        return priority;
+    }
+
+    public void setPriority(int priority) {
+        this.priority = priority;
+    }
+
+    public Entry(String name, String email, String number, int priority) {
         this.name = name;
         this.email = email;
         this.number = number;
+        this.priority = priority;
 
     }
 

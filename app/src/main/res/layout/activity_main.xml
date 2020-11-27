@@ -8,35 +8,48 @@
 
     <Button
         android:id="@+id/btnRetrieve"
-        android:layout_width="0dp"
+        android:layout_width="204dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
         android:text="@string/retrieve"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btnDelete"
         app:layout_constraintTop_toBottomOf="@+id/btnUpdate"
         app:layout_constraintVertical_bias="0.0" />
 
     <Button
         android:id="@+id/btnDelete"
-        android:layout_width="0dp"
+        android:layout_width="204dp"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
         android:text="@string/delete"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btnRetrieve"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnRetrieve"
+        app:layout_constraintTop_toBottomOf="@+id/btnSave"
         app:layout_constraintVertical_bias="0.0" />
 
     <Button
-        android:id="@+id/btnUpdate"
-        android:layout_width="0dp"
+        android:id="@+id/btnClear"
+        android:layout_width="204dp"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:text="@string/clear"
+        app:layout_constraintEnd_toStartOf="@+id/btnNext"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnDelete" />
+
+    <Button
+        android:id="@+id/btnUpdate"
+        android:layout_width="204dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
         android:text="@string/update"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnSave"
+        app:layout_constraintStart_toEndOf="@+id/btnSave"
+        app:layout_constraintTop_toBottomOf="@+id/etNumber"
         app:layout_constraintVertical_bias="0.0" />
 
     <EditText
@@ -76,27 +89,60 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.060000002" />
+        app:layout_constraintTop_toBottomOf="@+id/etPriority"
+        app:layout_constraintVertical_bias="0.0" />
 
     <Button
         android:id="@+id/btnSave"
-        android:layout_width="0dp"
+        android:layout_width="204dp"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
         android:text="@string/save"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btnUpdate"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etNumber"
         app:layout_constraintVertical_bias="0.0" />
 
-    <TextView
-        android:id="@+id/tvResult"
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/svResult"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnDelete" />
+        app:layout_constraintTop_toBottomOf="@+id/btnNext">
 
+        <TextView
+            android:id="@+id/tvResult"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnDelete" />
+    </androidx.core.widget.NestedScrollView>
+
+    <EditText
+        android:id="@+id/etPriority"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/priority"
+        android:inputType="number"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btnNext"
+        android:layout_width="204dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="@string/next"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btnClear"
+        app:layout_constraintTop_toBottomOf="@+id/btnRetrieve"
+        app:layout_constraintVertical_bias="0.0" />
 </androidx.constraintlayout.widget.ConstraintLayout>
