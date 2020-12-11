@@ -12,7 +12,7 @@ public class Entry {
     public Entry(){
         // Public no arg constructor for FireStore
     }
-    @Exclude // prevents document Id from being requested as it is redundant data.
+    @Exclude // prevents document Id from being requested as it is redundant data. idea from Coding in Flow  https://www.youtube.com/playlist?list=PLrnPJCHvNZuDrSqu-dKdDi3Q6nM-VUyxD
     public String getID() {
         return ID;
     }

@@ -36,7 +36,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:text="@string/clear"
-        app:layout_constraintEnd_toStartOf="@+id/btnNext"
+        app:layout_constraintEnd_toStartOf="@+id/btnExit"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnDelete" />
 
@@ -111,7 +111,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnNext">
+        app:layout_constraintTop_toBottomOf="@+id/btnExit">
 
         <TextView
             android:id="@+id/tvResult"
@@ -135,11 +135,11 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/btnNext"
+        android:id="@+id/btnExit"
         android:layout_width="204dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:text="@string/next"
+        android:text="@string/exit"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/btnClear"

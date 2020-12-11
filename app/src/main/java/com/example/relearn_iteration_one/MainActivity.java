@@ -1,10 +1,5 @@
 package com.example.relearn_iteration_one;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,16 +10,18 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.ListenerRegistration;
-import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.SetOptions;
@@ -50,6 +47,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Log.d("Lifecycle", "onCreate invoked");
+        Toast.makeText(getApplicationContext(), "onCreate Successful", Toast.LENGTH_SHORT).show();
 
         etName = findViewById(R.id.etName);
         etPriority = findViewById(R.id.etPriority);
@@ -61,16 +60,22 @@ public class MainActivity extends AppCompatActivity {
         btnRetrieve = findViewById(R.id.btnRetrieve);
         btnDelete = findViewById(R.id.btnDelete);
         btnClear = findViewById(R.id.btnClear);
-        btnNext = findViewById(R.id.btnNext);
+        btnNext = findViewById(R.id.btnExit);
 
-
-
-    btnSave.setOnClickListener(new View.OnClickListener() { // btnAdd in newest version would be more appropriate but didn't want to change yet as code is functioning as required.
+        btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(etPriority.length()==0) {
+                Intent intent = new Intent(MainActivity.this, MainActivity2.class);
+                startActivity(intent);
+            }
+        });
+
+        btnSave.setOnClickListener(new View.OnClickListener() { // btnAdd in newest version would be more appropriate but didn't want to change yet as code is functioning as required.
+            @Override
+            public void onClick(View v) {
+                if (etPriority.length() == 0) {
                     etPriority.setText("0");
-                }else{
+                } else {
                 }
                 int priority = Integer.parseInt(etPriority.getText().toString());
 
@@ -78,36 +83,38 @@ public class MainActivity extends AppCompatActivity {
                 String email = etEmail.getText().toString();
                 String number = etNumber.getText().toString();
 
-                Entry entry = new Entry(name,email,number, priority);
+                Entry entry = new Entry(name, email, number, priority);
                 portfolioRef.add(entry);
             }
         });
         btnRetrieve.setOnClickListener(new View.OnClickListener() { // retrieves multiple entries in newest version, may be  more appropriate to change naming convention, have not as code is functioning as required.
             @Override
             public void onClick(View v) { // based off coding in flow youtube channel - https://www.youtube.com/playlist?list=PLrnPJCHvNZuDrSqu-dKdDi3Q6nM-VUyxD
-                portfolioRef.whereGreaterThanOrEqualTo("priority", 4).orderBy("priority", Query.Direction.ASCENDING).limit(3)// querying based of priority id assigned to entries.
+                portfolioRef/*Commented out as trying to streamline code and functionality before adding in basic querying.
+                        .whereGreaterThanOrEqualTo("priority", 4).orderBy("priority", Query.Direction.ASCENDING).limit(3) */
+                        //above querying based of priority id assigned to entries.
                         .get()
                         .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                                                  @Override
-                                                  public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                                                      String data = "";
+                            @Override
+                            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                                String data = "";
 
-                                                      for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
-                                                         Entry entry = documentSnapshot.toObject(Entry.class);
-                                                          entry.setID(documentSnapshot.getId());
+                                for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
+                                    Entry entry = documentSnapshot.toObject(Entry.class);
+                                    entry.setID(documentSnapshot.getId());
 
-                                                          String ID = entry.getID();
-                                                          int priority = entry.getPriority();
-                                                          String name = entry.getName();
-                                                          String email = entry.getEmail();
-                                                          String number = entry.getNumber();
+                                    String ID = entry.getID();
+                                    int priority = entry.getPriority();
+                                    String name = entry.getName();
+                                    String email = entry.getEmail();
+                                    String number = entry.getNumber();
 
-                                                          data += "ID: " + ID + "\nPriority: " + priority + "\nName: " + name + "\n" + "Email: " + email + "\n" + "Number: " + number + "\n\n";
-                                                      }
-                                                      tvResult.setText(data);
-                                                  }
+                                    data += "ID: " + ID + "\nPriority: " + priority + "\nName: " + name + "\n" + "Email: " + email + "\n" + "Number: " + number + "\n\n";
+                                }
+                                tvResult.setText(data);
+                            }
 
-                                              })
+                        })
 
                         .addOnFailureListener(new OnFailureListener() {
                             @Override
@@ -115,7 +122,7 @@ public class MainActivity extends AppCompatActivity {
                                 Toast.makeText(MainActivity.this, "Error", Toast.LENGTH_SHORT).show();
                                 Log.d(TAG, e.toString());
                             }
-                        });
+                        }); //End of referenced code
             }
 
         });
@@ -164,9 +171,9 @@ public class MainActivity extends AppCompatActivity {
                                 Toast.makeText(MainActivity.this, "Error", Toast.LENGTH_SHORT).show();
                             }
                         });
-                        etName.setText("");
-                        etEmail.setText("");
-                        etNumber.setText("");
+                etName.setText("");
+                etEmail.setText("");
+                etNumber.setText("");
 
 
             }
@@ -174,61 +181,44 @@ public class MainActivity extends AppCompatActivity {
         btnClear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                etPriority.setText("");
-                etName.setText("");
-                etEmail.setText("");
-                etNumber.setText("");
-
-
-
-
+                tvResult.setText("");
 
             }
         });
-        btnNext.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openMainActivity2();
 
+    } // Currently commented event listener out as it is causing application to crash when navigating between activities, will work on to amend in future iterations.
+        @Override // Code referenced from coding in flow - https://www.youtube.com/playlist?list=PLrnPJCHvNZuDrSqu-dKdDi3Q6nM-VUyxD
+        protected void onStart () {
+            super.onStart();
+            portfolioRef.addSnapshotListener(this, new EventListener<QuerySnapshot>() {
+                @Override
+                public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                    if (e != null) {
+                        return;
+                    }
+                    String data = "";
+                    for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
+                        Entry entry = documentSnapshot.toObject(Entry.class);
+                        entry.setID(documentSnapshot.getId());
 
-            }
-        });
-    }
-    public void openMainActivity2(){//code from lecture material on moving between activities
-        Intent intent = new Intent(this, MainActivity2.class);
-        startActivity(intent);
-    }
-    @Override // Code referenced from coding in flow - https://www.youtube.com/playlist?list=PLrnPJCHvNZuDrSqu-dKdDi3Q6nM-VUyxD
-    protected void onStart() {
-        super.onStart();
-        portfolioRef.addSnapshotListener(this, new EventListener<QuerySnapshot>() {
-            @Override
-            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
-                if(e!=null){
-                    return;
+                        String ID = entry.getID();
+                        String name = entry.getName();
+                        String email = entry.getEmail();
+                        String number = entry.getNumber();
+                        int priority = entry.getPriority();
+
+                        data += "ID: " + ID + "\nPriority: " + priority + "\nName: " + name + "\n" + "Email: " + email + "\n" + "Number: " + number + "\n\n";
+                    }
+                    tvResult.setText(data);
                 }
-                String data = "";
-                for (QueryDocumentSnapshot  documentSnapshot : queryDocumentSnapshots){
-                    Entry entry = documentSnapshot.toObject(Entry.class);
-                    entry.setID(documentSnapshot.getId());
+            });
+        }
+        @Override
+        protected void onStop () {
+            super.onStop();
+            EntryListener.remove();
+        }
 
-                    String ID = entry.getID();
-                    String name = entry.getName();
-                    String email = entry.getEmail();
-                    String number = entry.getNumber();
-                    int priority = entry.getPriority();
-
-                    data += "ID: " + ID + "\nPriority: " + priority + "\nName: " + name + "\n" + "Email: " + email + "\n" + "Number: " + number + "\n\n";
-                }
-                tvResult.setText(data);
-                }
-        });
-    }
-    @Override
-    protected void onStop() {
-        super.onStop();
-        EntryListener.remove();
-    }
 }
 
 
