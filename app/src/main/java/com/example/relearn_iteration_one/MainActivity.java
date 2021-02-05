@@ -11,16 +11,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.ListenerRegistration;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -84,9 +83,16 @@ public class MainActivity extends AppCompatActivity {
                 String number = etNumber.getText().toString();
 
                 Entry entry = new Entry(name, email, number, priority);
-                portfolioRef.add(entry);
+                portfolioRef.add(entry)
+                        .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+                            @Override
+                            public void onComplete(@NonNull Task<DocumentReference> task) {
+                                Toast.makeText(MainActivity.this, "Saved!", Toast.LENGTH_SHORT).show();
+                            }
+                        });
             }
         });
+
         btnRetrieve.setOnClickListener(new View.OnClickListener() { // retrieves multiple entries in newest version, may be  more appropriate to change naming convention, have not as code is functioning as required.
             @Override
             public void onClick(View v) { // based off coding in flow youtube channel - https://www.youtube.com/playlist?list=PLrnPJCHvNZuDrSqu-dKdDi3Q6nM-VUyxD
@@ -186,7 +192,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-    } // Currently commented event listener out as it is causing application to crash when navigating between activities, will work on to amend in future iterations.
+    } /* Currently commented event listener out as it is causing application to crash when navigating between activities, will work on to amend in future iterations.
         @Override // Code referenced from coding in flow - https://www.youtube.com/playlist?list=PLrnPJCHvNZuDrSqu-dKdDi3Q6nM-VUyxD
         protected void onStart () {
             super.onStart();
@@ -217,7 +223,7 @@ public class MainActivity extends AppCompatActivity {
         protected void onStop () {
             super.onStop();
             EntryListener.remove();
-        }
+        }*/
 
 }
 
