@@ -9,7 +9,7 @@ public class Entry {
     private String number;
     private int priority;
 
-    public Entry(){
+    public Entry(String fullname, String email, String password){
         // Public no arg constructor for FireStore
     }
     @Exclude // prevents document Id from being requested as it is redundant data. idea from Coding in Flow  https://www.youtube.com/playlist?list=PLrnPJCHvNZuDrSqu-dKdDi3Q6nM-VUyxD

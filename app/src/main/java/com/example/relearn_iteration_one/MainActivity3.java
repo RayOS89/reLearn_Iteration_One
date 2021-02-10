@@ -15,11 +15,16 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class MainActivity3 extends AppCompatActivity {
     private EditText fullname, email, password;
     private Button btnRegisterBack, btnRegister2;
     private FirebaseAuth auth;
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private CollectionReference portfolioRef = db.collection("Users");
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,6 +36,8 @@ public class MainActivity3 extends AppCompatActivity {
         email = findViewById(R.id.etEmail2);
         password = findViewById(R.id.et_Password);
         auth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
+
 
         btnRegisterBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,8 +72,6 @@ public class MainActivity3 extends AppCompatActivity {
                 }else{
                     registerUser(txt_fullname, txt_email, txt_password);
                 }
-
-
             }
         });
     }
@@ -77,13 +82,16 @@ public class MainActivity3 extends AppCompatActivity {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
                     Toast.makeText(MainActivity3.this, "Registered User Credentials Successfully", Toast.LENGTH_SHORT).show();
+                    Register register = new Register(fullname, email, password);
+                    portfolioRef.add(register);
                     startActivity(new Intent(MainActivity3.this, MainActivity.class));
                     finish();
-                }else{
+                }else
                     Toast.makeText(MainActivity3.this,"User registration Failed", Toast.LENGTH_SHORT).show();
-                }
+
             }
+
         });
-        Toast.makeText(MainActivity3.this,"Empty Credentials", Toast.LENGTH_SHORT).show();
     }
+
 }

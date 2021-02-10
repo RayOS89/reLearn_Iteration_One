@@ -13,10 +13,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -39,9 +37,9 @@ public class MainActivity extends AppCompatActivity {
     private ScrollView svResult;
     private Button btnSave, btnUpdate, btnRetrieve, btnDelete, btnClear, btnNext;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private DocumentReference entryRef = db.collection("Class").document("Student Details");
+    private DocumentReference entryRef = db.collection("Users").document();
     private ListenerRegistration EntryListener;
-    private CollectionReference portfolioRef = db.collection("Class");
+    private CollectionReference portfolioRef = db.collection("Users");
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,16 +81,9 @@ public class MainActivity extends AppCompatActivity {
                 String number = etNumber.getText().toString();
 
                 Entry entry = new Entry(name, email, number, priority);
-                portfolioRef.add(entry)
-                        .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
-                            @Override
-                            public void onComplete(@NonNull Task<DocumentReference> task) {
-                                Toast.makeText(MainActivity.this, "Saved!", Toast.LENGTH_SHORT).show();
-                            }
-                        });
+                portfolioRef.add(entry);
             }
         });
-
         btnRetrieve.setOnClickListener(new View.OnClickListener() { // retrieves multiple entries in newest version, may be  more appropriate to change naming convention, have not as code is functioning as required.
             @Override
             public void onClick(View v) { // based off coding in flow youtube channel - https://www.youtube.com/playlist?list=PLrnPJCHvNZuDrSqu-dKdDi3Q6nM-VUyxD
@@ -103,6 +94,7 @@ public class MainActivity extends AppCompatActivity {
                         .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                             @Override
                             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                                Toast.makeText(MainActivity.this, "Error", Toast.LENGTH_SHORT).show();
                                 String data = "";
 
                                 for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {

@@ -24,5 +24,24 @@
     <string name="back">Back</string>
     <string name="register">Register</string>
     <string name="exit">Exit</string>
+    <string name="title_activity_welcome">Home Screen</string>
+    <string name="nextslide">NEXT</string>
+    <string name="skip">SKIP</string>
+    <string name="start">GOT IT</string>
+
+    <string name="slide_1_title"> Welcome to re:Learn</string>
+    <string name="slide_1_desc"></string>
+
+    <string name="slide_2_title">Reduce Media Consumption</string>
+    <string name="slide_2_desc"></string>
+
+    <string name="slide_3_title">While Revising Material</string>
+    <string name="slide_3_desc"></string>
+
+    <string name="slide_4_title">And Tracking Progress</string>
+    <string name="slide_4_desc"></string>
+
+    <string name="play_again_desc">To see the welcome slider again, goto Settings -> apps -> welcome slider -> clear data</string>
+    <string name="play_again">Play Again</string>
 
 </resources>
