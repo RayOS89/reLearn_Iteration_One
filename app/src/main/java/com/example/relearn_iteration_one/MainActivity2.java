@@ -69,7 +69,7 @@ public class MainActivity2 extends AppCompatActivity {
         });
     }
 
-    private void loginUser(String email, String password) {
+    private void loginUser(String email, String password) { // referenced from firebase authentication documentation https://firebase.google.com/docs/auth/android/email-link-auth?authuser=0
 
         auth.signInWithEmailAndPassword(email, password).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
             @Override

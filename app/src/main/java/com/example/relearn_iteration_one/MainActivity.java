@@ -38,7 +38,6 @@ public class MainActivity extends AppCompatActivity {
     private Button btnSave, btnUpdate, btnRetrieve, btnDelete, btnClear, btnNext;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private DocumentReference entryRef = db.collection("Users").document();
-    private ListenerRegistration EntryListener;
     private CollectionReference portfolioRef = db.collection("Users");
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,12 +101,12 @@ public class MainActivity extends AppCompatActivity {
                                     entry.setID(documentSnapshot.getId());
 
                                     String ID = entry.getID();
-                                    int priority = entry.getPriority();
+                                    //int priority = entry.getPriority();
                                     String name = entry.getName();
                                     String email = entry.getEmail();
                                     String number = entry.getNumber();
 
-                                    data += "ID: " + ID + "\nPriority: " + priority + "\nName: " + name + "\n" + "Email: " + email + "\n" + "Number: " + number + "\n\n";
+                                    data += "ID: " + ID +  "\nName: " + name + "\n" + "Email: " + email + "\n" + "Number: " + number + "\n\n";
                                 }
                                 tvResult.setText(data);
                             }
